@@ -44,5 +44,18 @@ class Grid:
     def random_fill(self):
         # Add some bridges
         for _ in range(5):
-            x, y = random.randint(0, self.width-1), random.randint(0, self.height-1)
+            x, y = random.randint(0, self.width - 1), random.randint(0, self.height - 1)
             self.set_cell_type(x, y, CellType.BRIDGE)
+
+        # Place Silver Surfer on the first bridge (for testing sabotage)
+        if self.bridges:
+            bx, by = self.bridges[0].x, self.bridges[0].y
+            self.set_cell_type(bx, by, CellType.SILVER_SURFER)
+            self.silver_surfer_start = (bx, by)
+        else:
+            # fallback in case no bridge exists
+            sx, sy = random.randint(0, self.width - 1), random.randint(0, self.height - 1)
+            self.set_cell_type(sx, sy, CellType.SILVER_SURFER)
+            self.silver_surfer_start = (sx, sy)
+
+
