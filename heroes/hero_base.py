@@ -34,8 +34,10 @@ class HeroBase(ABC):
     def repair_bridge(self):
         cell = self.grid.get_cell(self.x, self.y)
         if cell.cell_type == CellType.BRIDGE:
-            print(f"{self.name} repairs bridge at ({self.x}, {self.y})")
-            self.energy -= 10
+            bridge = self.grid.get_bridge_at(self.x, self.y)
+            if bridge:
+                bridge.repair()
+                self.energy -= 10
         else:
             print(f"{self.name} is not on a bridge cell.")
 

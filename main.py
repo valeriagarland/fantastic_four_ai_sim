@@ -1,8 +1,6 @@
 # main.py
 from environment.grid import Grid
 from heroes.reed_richards import ReedRichards
-from heroes.sue_storm import SueStorm
-from heroes.johnny_storm import JohnnyStorm
 from heroes.ben_grimm import BenGrimm
 
 def main():
@@ -12,22 +10,28 @@ def main():
     grid.random_fill()
     grid.display()
 
-    # Create heroes
+    # Place heroes
     reed = ReedRichards("Reed", 2, 2, grid)
-    sue = SueStorm("Sue", 3, 3, grid)
-    johnny = JohnnyStorm("Johnny", 4, 4, grid)
     ben = BenGrimm("Ben", 5, 5, grid)
 
-    # Example hero actions
-    reed.scan_surroundings()
-    reed.move(1, 0)
-    reed.use_ability()
+    # Force Ben onto a bridge for testing
+    if grid.bridges:
+        bx, by = grid.bridges[0].x, grid.bridges[0].y
+        ben.x, ben.y = bx, by
+        print(f"{ben.name} starts at bridge ({bx}, {by})")
 
-    sue.move(0, 1)
-    sue.use_ability()
+        # Simulate sabotage
+        bridge = grid.get_bridge_at(bx, by)
+        bridge.sabotage()
 
-    ben.repair_bridge()
-    johnny.use_ability()
+        # Ben repairs it
+        ben.repair_bridge()
+
+    # Check mission status
+    if grid.all_bridges_operational():
+        print("All bridges are operational. Earth can teleport safely!")
+    else:
+        print("Some bridges are still incomplete or damaged!")
 
 if __name__ == "__main__":
     main()
