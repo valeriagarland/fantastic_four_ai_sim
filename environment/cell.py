@@ -1,4 +1,3 @@
-
 from enum import Enum, auto
 
 class CellType(Enum):
@@ -7,6 +6,7 @@ class CellType(Enum):
     HERO = auto()
     SILVER_SURFER = auto()
     GALACTUS = auto()
+    RECHARGE = auto()  # recharge zone
 
 class Cell:
     def __init__(self, x, y, cell_type=CellType.EMPTY):
